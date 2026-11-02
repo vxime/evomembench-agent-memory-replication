@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 812" width="420" height="812" lang="zh-cn" role="img" aria-labelledby="evg-m-title evg-m-desc" font-family="Inter, Noto Sans CJK SC, system-ui, sans-serif">
+<title id="evg-m-title">记忆增益，是方法的属性，还是预算的函数？</title>
+<desc id="evg-m-desc">工程审查插画（移动版）：上方为 EvoMemBench 论文口径（作者自报）——Finding 3 报告 16K 档最佳记忆增益 +14.5 分。中间是预注册探针：只把上下文预算从 16K 放大到 128K，并把 token 按用途拆开。下方为我方在 Gorilla File System、每格 50 题、网关标注端点上的复测：BM25 增益 +4.0 蒸发到 0.0，ACE 增益 +18.0 收窄到 +6.0；ACE 记忆模块占其自身输入 token 的 36.5%，输出约为无记忆基线的 7.4 倍。底部结论为复合判读 PARTIAL，范围限于单环境、单一标注端点、单次运行，Finding 5 未测。</desc>
+<defs>
+<pattern id="evg-m-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#E7E4DB"/></pattern>
+<marker id="evg-m-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#8A98A6" stroke-width="1"/></marker>
+<linearGradient id="evg-m-beamg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F5C95C" stop-opacity="0"/><stop offset=".5" stop-color="#F5C95C" stop-opacity=".5"/><stop offset="1" stop-color="#F5C95C" stop-opacity="0"/></linearGradient>
+</defs>
+<style>*{animation:none!important}</style>
+<rect width="420" height="812" fill="#FAF9F5"/><rect width="420" height="812" fill="url(#evg-m-dots)" opacity=".72"/><rect x="10" y="10" width="400" height="792" rx="11" fill="none" stroke="#E1DFD7"/>
+<text x="24" y="36" font-size="9.5" font-weight="700" letter-spacing="1" fill="#53677B">EVOMEMBENCH / GAIN &amp; COST REVIEW</text>
+<text x="24" y="64" font-size="20" font-weight="700" fill="#16324F">记忆增益，是方法的属性，</text>
+<text x="24" y="90" font-size="20" font-weight="700" fill="#16324F">还是预算的函数？</text>
+<text x="24" y="114" font-size="11.5" fill="#53677B">两个没写进分数表的假设：增益随方法走、记忆不再花钱。</text>
+<text x="24" y="132" font-size="11.5" fill="#53677B">用一次预注册探针，逐个检查。</text>
+<rect x="24" y="142" width="168" height="20" rx="5" fill="#F1E9D5" stroke="#E2D4B5"/><text x="108" y="156" font-size="10.5" font-weight="600" fill="#7A6220" text-anchor="middle">子集复测 · 非论文原口径</text>
+
+<g class="surface">
+<rect x="24" y="176" width="372" height="148" rx="9" fill="#FFFFFF" stroke="#C9D4DE"/>
+<rect x="24" y="176" width="372" height="28" rx="9" fill="#EFF3F6"/><rect x="24" y="192" width="372" height="12" fill="#EFF3F6"/>
+<text x="38" y="195" font-size="12.5" font-weight="700" fill="#16324F">表面断言</text>
+<text x="382" y="195" font-size="10" fill="#53677B" text-anchor="end">论文口径 · 作者自报</text>
+<text x="38" y="234" font-size="26" font-weight="700" fill="#16324F">+14.5 分</text>
+<text x="152" y="226" font-size="12" fill="#33475B">16K 档最佳记忆增益</text>
+<text x="152" y="244" font-size="11" fill="#53677B">DeepSeek-V3.2 · 15 种方法统一排名</text>
+<text x="38" y="272" font-size="12.5" fill="#33475B">“预算越紧，记忆越有用” · “程序型记忆最适配执行任务”</text>
+<text x="38" y="294" font-size="11.5" fill="#53677B">128K 档：已有方法跌破无记忆基线（论文报告）</text>
+<text x="38" y="314" font-size="10.5" fill="#8A98A6">以上为论文报告值；下方为我方测量。假设 ① 增益换个预算也成立 ② 记忆不再花钱</text>
+</g>
+
+<g class="probe">
+<rect x="24" y="336" width="372" height="148" rx="9" fill="#FFFFFF" stroke="#C9D4DE"/>
+<rect x="24" y="336" width="372" height="28" rx="9" fill="#FBF3DF"/><rect x="24" y="352" width="372" height="12" fill="#FBF3DF"/>
+<text x="38" y="355" font-size="12.5" font-weight="700" fill="#16324F">反例探针</text>
+<text x="382" y="355" font-size="10" fill="#7A6220" text-anchor="end">预注册 · 设置冻结</text>
+<rect x="38" y="374" width="64" height="30" rx="6" fill="#EFF3F6" stroke="#C9D4DE"/><text x="70" y="394" font-size="13.5" font-weight="700" fill="#16324F" text-anchor="middle">16K</text>
+<line x1="108" y1="389" x2="146" y2="389" stroke="#8A98A6" marker-end="url(#evg-m-arrow)"/>
+<rect x="152" y="374" width="64" height="30" rx="6" fill="#16324F"/><text x="184" y="394" font-size="13.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">128K</text>
+<text x="226" y="394" font-size="11" fill="#53677B">只放大预算，其余冻结</text>
+<rect x="38" y="414" width="344" height="56" rx="6" fill="#FAF9F5" stroke="#E1DFD7"/>
+<text x="48" y="432" font-size="10.5" fill="#53677B">任务执行</text><rect x="112" y="423" width="180" height="8" rx="3" fill="#B9C9D6"/>
+<text x="48" y="456" font-size="10.5" font-weight="700" fill="#7A6220">记忆维护</text><rect x="112" y="447" width="88" height="8" rx="3" fill="#E3B23C"/>
+<rect class="focus" x="106" y="438" width="112" height="26" rx="5" fill="none" stroke="#B08A2E" stroke-width="1.3" stroke-opacity=".85"/>
+<rect class="scan" x="42" y="412" width="40" height="60" fill="url(#evg-m-beamg)"/>
+</g>
+
+<g class="bars">
+<rect x="24" y="496" width="372" height="184" rx="9" fill="#FFFFFF" stroke="#C9D4DE"/>
+<rect x="24" y="496" width="372" height="28" rx="9" fill="#EFF3F6"/><rect x="24" y="512" width="372" height="12" fill="#EFF3F6"/>
+<text x="38" y="515" font-size="12.5" font-weight="700" fill="#16324F">探针结果</text>
+<text x="382" y="515" font-size="10" fill="#53677B" text-anchor="end">我方复测 · Gorilla FS · 每格 n=50</text>
+<text x="38" y="544" font-size="12" font-weight="700" fill="#33475B">ACE</text>
+<rect x="80" y="534" width="150" height="10" rx="3" fill="#B9C9D6"/><text x="238" y="543" font-size="11" fill="#53677B">16K +18.0</text>
+<rect class="shrinkAce" x="80" y="550" width="50" height="10" rx="3" fill="#16324F"/><text x="238" y="559" font-size="11" font-weight="700" fill="#16324F">128K +6.0</text>
+<text x="38" y="584" font-size="12" font-weight="700" fill="#33475B">BM25</text>
+<rect x="80" y="574" width="33" height="10" rx="3" fill="#B9C9D6"/><text x="238" y="583" font-size="11" fill="#53677B">16K +4.0</text>
+<rect class="shrinkBm" x="80" y="590" width="3" height="10" rx="1.5" fill="#C4463F"/><text x="238" y="599" font-size="11" font-weight="700" fill="#C4463F">128K 0.0 · 蒸发</text>
+<text x="38" y="622" font-size="11" fill="#53677B">基线也在变强：无记忆 38% → 44%（19/50 → 22/50）</text>
+</g>
+<g class="rent">
+<rect x="38" y="632" width="344" height="40" rx="6" fill="#FBF0EE" stroke="#C4463F" stroke-dasharray="5 4"/>
+<text x="50" y="650" font-size="11.5" fill="#33475B">租金：ACE 记忆模块 = 自身输入的 <tspan font-weight="700" fill="#C4463F">36.5%</tspan> · 输出 ≈ 基线 7.4×</text>
+<text x="50" y="666" font-size="10.5" fill="#53677B">增益缩水，租金不缩（134 万 → 132 万）</text>
+</g>
+
+<g class="scope">
+<line x1="24" y1="696" x2="396" y2="696" stroke="#E1DFD7"/>
+<text x="24" y="720" font-size="12.5" fill="#33475B">预注册 → 只变预算 → 按用途拆 token → 判读 <tspan font-weight="700" fill="#B08A2E">PARTIAL</tspan></text>
+<text x="24" y="742" font-size="11" fill="#53677B">配对复核（同 50 题）：ACE@16K 多对 9 · 少对 0 · 收窄 CI [0, +26]</text>
+<text x="24" y="762" font-size="11" fill="#53677B">范围：单环境 · 单一网关标注端点（身份不可核验）· 单次运行</text>
+<text x="24" y="782" font-size="11" fill="#53677B">Finding 5 未测（探针已取消）· 128K 跌破基线在本子集未出现</text>
+</g>
+</svg>
