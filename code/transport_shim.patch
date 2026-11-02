@@ -1,0 +1,82 @@
+diff --git a/In-Episode-Execution/INEP-EXEC/bfcl_eval/memory/ark_client.py b/In-Episode-Execution/INEP-EXEC/bfcl_eval/memory/ark_client.py
+index 781c01d..e85ad56 100644
+--- a/In-Episode-Execution/INEP-EXEC/bfcl_eval/memory/ark_client.py
++++ b/In-Episode-Execution/INEP-EXEC/bfcl_eval/memory/ark_client.py
+@@ -3,9 +3,18 @@
+ Shared by the ArkBatchPromptingHandler (main inference) and the mem0 LLM
+ backend so they reuse the same retry policy and per-thread client-construction
+ logic.
++
++EVOMEM LOCAL PATCH (2026-11-02, local working copy only — not upstream):
++when the environment variable EVOMEM_TRANSPORT=openai, _sdk_client() returns
++an OpenAI-API transport exposing the same client.batch.chat.completions
++.create(**kwargs) surface used by _call_impl, so the unmodified protocol,
++prompting, memory and scoring code above and downstream runs against the
++OpenAI API instead of the Volcengine Ark batch endpoint. No protocol code is
++changed; see EVOMEM_LOCAL_PATCHES.md in this directory.
+ """
+ from __future__ import annotations
+ 
++import os
+ import threading
+ import time
+ from typing import Any
+@@ -23,10 +32,44 @@ def _is_transient(exc: BaseException) -> bool:
+     name = type(exc).__name__.lower()
+     if any(tag in name for tag in ("ratelimit", "timeout", "apiconnection", "apierror")):
+         return True
++    status = getattr(exc, "status_code", None)
++    if status in (429, 500, 502, 503, 504):
++        return True
+     msg = str(exc).lower()
+     return any(tag in msg for tag in ("rate limit", "timeout", "timed out", "connection", "503", "overloaded"))
+ 
+ 
++class _Namespace:
++    """Tiny attribute bag used to mirror the Ark SDK's nested namespaces."""
++
++    def __init__(self, **kwargs):
++        self.__dict__.update(kwargs)
++
++
++class _OpenAITransport:
++    """OpenAI-API transport with the Ark client's call surface.
++
++    _call_impl invokes client.batch.chat.completions.create(model=...,
++    messages=..., tools=...); this class exposes exactly that path on top of
++    the official OpenAI Python client. The SDK's own retries are disabled so
++    the authors' tenacity policy in ArkBatchClient remains the only retry
++    layer. No temperature or other generation parameter is added or removed:
++    the call kwargs pass through untouched, exactly as on the Ark path.
++    """
++
++    def __init__(self, api_key: str, timeout: int = 1200):
++        from openai import OpenAI
++
++        base_url = os.environ.get("OPENAI_BASE_URL") or "https://api.openai.com/v1"
++        client = OpenAI(**dict(zip(
++            ["api_key", "base_url", "timeout", "max_retries"],
++            [api_key, base_url, timeout, 0],
++        )))
++        completions = _Namespace(create=lambda **kwargs: client.chat.completions.create(**kwargs))
++        chat = _Namespace(completions=completions)
++        self.batch = _Namespace(chat=chat)
++
++
+ class ArkBatchClient:
+     """Synchronous Ark batch chat-completions client.
+ 
+@@ -53,8 +96,11 @@ class ArkBatchClient:
+     def _sdk_client(self):
+         client = getattr(self._tls, "client", None)
+         if client is None:
+-            from volcenginesdkarkruntime import Ark  # optional dependency
+-            client = Ark(api_key=self._api_key, timeout=self._timeout)
++            if os.environ.get("EVOMEM_TRANSPORT", "").lower() == "openai":
++                client = _OpenAITransport(api_key=self._api_key, timeout=self._timeout)
++            else:
++                from volcenginesdkarkruntime import Ark  # optional dependency
++                client = Ark(api_key=self._api_key, timeout=self._timeout)
+             self._tls.client = client
+         return client
+ 

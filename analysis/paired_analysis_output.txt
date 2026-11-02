@@ -1,0 +1,10 @@
+== cost shares (from full_results.json) ==
+total input 15,169,724 | ACE own input 7,285,717 | ACE memory-module 2,662,908
+memory / total input = 17.55% | memory / ACE own input = 36.55%
+ACE output 429,255 / A0 output 58,345 = 7.36x
+
+== paired analysis (same 50 task ids in all six cells) ==
+successes: {'a0_16k': 19, 'a0_128k': 22, 'bm25_16k': 21, 'bm25_128k': 22, 'ace_16k': 28, 'ace_128k': 25}
+bm25: gain@16K +4.0 (wins 4, losses 2), gain@128K +0.0 (wins 3, losses 3), shrinkage +4.0 pts, paired-bootstrap 95% CI [-10.0, +20.0]
+ace: gain@16K +18.0 (wins 9, losses 0), gain@128K +6.0 (wins 6, losses 3), shrinkage +12.0 pts, paired-bootstrap 95% CI [+0.0, +26.0]
+raw 16K->128K moves (tasks): A0 +3, BM25 +1, ACE -3
