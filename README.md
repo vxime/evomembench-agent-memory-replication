@@ -1,6 +1,6 @@
 # EvoMemBench subset replication — public evidence bundle
 
-Evidence bundle for the article 《16K 到 128K，记忆增益从 +18 缩到 +6：我在网关最便宜的 GPT 端点上复测了 EvoMemBench 的一个子集》 (vxi.me), a pre-registered subset replication of **EvoMemBench** (arXiv:2605.18421v3) run on 2026-11-02.
+Evidence bundle for the article 《16K 到 128K，Agent 记忆增益从 +18 缩至 +6：EvoMemBench 子集复测与 Token 成本解剖》 (vxi.me), a pre-registered subset replication of **EvoMemBench** (arXiv:2605.18421v3) run on 2026-11-02.
 
 **What was run.** One environment (Gorilla File System) of the paper's InEp-Exec setting, using the official repository [DSAIL-Memory/EvoMemBench](https://github.com/DSAIL-Memory/EvoMemBench) pinned at commit `5f550e0c48f9f1873f64bab9d1c94da5d3ccc4aa` and its in-episode runner with the paper's protocol (FC mode, long-context noise on, context budgets 16K / 128K). Three arms — no-memory baseline (A0), BM25 retrieval memory (A1), ACE procedural memory (A2) — over the same 50 tasks per cell, 300 episodes total, zero failed calls. Backbone: an endpoint **labelled `gpt-6-luna`** at the operator's third-party OpenAI-compatible gateway (gateway name redacted in this bundle). The label is the gateway's; the underlying served model cannot be independently verified, so every number here is bounded to that labelled endpoint and is a variant caliber, never the paper's DeepSeek-V3.2 caliber.
 

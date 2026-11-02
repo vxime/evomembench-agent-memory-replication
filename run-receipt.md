@@ -1,4 +1,4 @@
-> Public copy of the lab's run receipt for the EvoMemBench subset replication (article: 《16K 到 128K，记忆增益从 +18 缩到 +6》, vxi.me). The gateway's name and base URL are redacted; the model label, all numbers, deviations and errata are reproduced in full.
+> Public copy of the lab's run receipt for the EvoMemBench subset replication (article: 《16K 到 128K，Agent 记忆增益从 +18 缩至 +6：EvoMemBench 子集复测与 Token 成本解剖》, vxi.me). The gateway's name and base URL are redacted; the model label, all numbers, deviations and errata are reproduced in full.
 
 # EvoMemBench InEp-Exec scoped run — execution receipt
 
